@@ -83,3 +83,9 @@
 .cantidad{
     width: 10%;
 }
+
+.feedback{
+    font-size: x-large;
+    font-weight: bolder;
+    color: #ff0000;
+}

@@ -35,6 +35,18 @@ const productos = [
 var total = 0.00;
 
 function buscarProducto(event) {
+
+    //alert("keycode: " + event.keyCode);
+    //Borrar ultimo producto
+    if(event.keyCode === 27){
+        var table = document.getElementById("productos");
+        total -= parseFloat(table.lastChild.children[3].innerHTML);
+        document.getElementById("total").innerHTML = `${total.toFixed(2)}`;
+        table.removeChild(table.lastChild);
+        document.getElementById("feedback").innerHTML = "";
+        limpiar();
+    }
+    //Buscar producto
     if (event.keyCode === 13) {
         var codigo = document.getElementById("codigo").value;  
         var cantidad = 1;
@@ -43,6 +55,9 @@ function buscarProducto(event) {
             cantidad = codigo.split("*")[0];
             codigo = codigo.split("*")[1];
         }
+
+        var control = false;
+
         for (var i = 0; i < productos.length; i++) {
             if (productos[i][0] === codigo) {
                 var agregar = document.getElementById("productos");
@@ -59,12 +74,45 @@ function buscarProducto(event) {
                 cell3.setAttribute("style", "text-align:center;");
 
                 total += parseFloat((cantidad*productos[i][2]).toFixed(2));
-                document.getElementById("total").innerHTML = total.toFixed(2);
+                document.getElementById("total").innerHTML = `${total.toFixed(2)}`;
 
                 cell4.innerHTML = (cantidad*productos[i][2]).toFixed(2);   
                 cell4.setAttribute("style", "text-align:center;");
+
+                control = true;
+
+                document.getElementById("feedback").innerHTML = "";
+                
+                break;
             }
         }
+        if (control === false) {
+            document.getElementById("feedback").innerHTML = `El producto con codigo ${codigo} no existe`;
+        }
+        limpiar();
+    }
+    //Repetir ultimo producto
+    if (event.keyCode === 82) {
+        event.preventDefault();
+        document.getElementById("feedback").innerHTML = "";
+        repetirProducto();
+    }
+}
 
+function limpiar(){
+    
+    document.getElementById("codigo").focus();
+    document.getElementById("codigo").value = "";
+    
+}
+
+function repetirProducto(){
+    var table = document.getElementById("productos");
+    if (table.rows.length>0){
+        var ultimoProducto = table.lastChild;
+        var cantidad = parseFloat(ultimoProducto.firstChild.innerHTML);
+        var precio = parseFloat(ultimoProducto.childNodes[2].innerHTML);
+        //Incrementamos la cantidad
+        ultimoProducto.firstChild.innerHTML=++cantidad;
     }
 }
