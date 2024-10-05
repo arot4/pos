@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PoS</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="./js/functions.js"></script>
 </head>
 <body>
     <div class="contenedor">
@@ -16,7 +17,7 @@
     <div class="contenedor_producto">
         <table id="tabla">
             <tr>
-                <th>Cantidad</th>
+                <th class="cantidad">Cantidad</th>
                 <th>Producto</th>
                 <th>Precio</th>
                 <th>Total</th>
@@ -26,7 +27,7 @@
             </tbody>
         </table>
     </div>
-    <input type="text" class="entrada" autofocus>
+    <input type="text" id="codigo" class="entrada" autofocus onkeydown="buscarProducto(event)">
     <div class="botones">
         <input type="button" value="" class="boton" id="btn1">
         <input type="button" value="" class="boton" id="btn2">
