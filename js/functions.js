@@ -114,5 +114,24 @@ function repetirProducto(){
         var precio = parseFloat(ultimoProducto.childNodes[2].innerHTML);
         //Incrementamos la cantidad
         ultimoProducto.firstChild.innerHTML=++cantidad;
+        //Actualizamos el total
+        var totalProducto = cantidad*precio;
+        ultimoProducto.lastChild.innerHTML = totalProducto.toFixed(2);
+        total += precio;
+        document.getElementById("total").innerHTML = `${total.toFixed(2)}`;
+    }
+}
+
+function cancelarVenta(){
+    var cancelacion = confirm("¿Estas seguro de cancelar la venta?");
+    if(cancelacion){
+        var table = document.getElementById("productos");
+        while(table.rows.length>0){
+            total -= parseFloat(table.lastChild.children[3].innerHTML);
+            document.getElementById("total").innerHTML = `${total.toFixed(2)}`;
+            table.removeChild(table.lastChild);
+        }
+        document.getElementById("feedback").innerHTML = "";
+        limpiar();
     }
 }
